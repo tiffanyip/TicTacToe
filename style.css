@@ -1,0 +1,28 @@
+.cells{
+  border: 1px solid;
+  width: 3em;
+  height: 3em;
+  margin: 0em, 0em, 0em, 0em;
+  padding: 0;
+  display: inline-block;
+}
+table{
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+}
+p{
+  font-family: serif;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+}
+
+div{
+  text-align: center;
+  margin: 0;
+}
+
+.turn{
+  display: inline-block;
+}
