@@ -25,22 +25,9 @@ $(document).ready(function(){
     }
   });
 
-  $("reset").on('click', function(){
-    document.getElementById("p1score").innerHTML = this.p1Score;
-    document.getElementById("p2score").innerHTML = this.p2Score;
-    var allCells = document.getElementsByClassName("cells");
-    for(var i = 0; i < allCells.length; i++){
-      allCells[i].innerHTML = "";
-    }
-    //reset board elements
-    document.getElementById("playerTurn").innerHTML = 1;
-    //can modify to determine who plays first in the next round
-    this.p1Turn = true;
-    this.p1Clicks = Array(9).fill(0);
-    this.p2Clicks = Array(9).fill(0);
-    this.board = Array(9).fill(0);
-    this.endRound = false;
-  });
+  $("#reset").on('click', function() {
+    game.reset();
+  })
 
 });
 
@@ -68,24 +55,26 @@ Game.prototype.determineWinner = function(){
   if(this.board.reduce( (prev, curr) => prev + curr ) === 9){
     this.endRound = true;
   }
-
   //update scoreboard
   if(this.endRound){
-    document.getElementById("p1score").innerHTML = this.p1Score;
-    document.getElementById("p2score").innerHTML = this.p2Score;
-    var allCells = document.getElementsByClassName("cells");
-    for(var i = 0; i < allCells.length; i++){
-      allCells[i].innerHTML = "";
-    }
-    //reset board elements
-    document.getElementById("playerTurn").innerHTML = 1;
-    //can modify to determine who plays first in the next round
-    this.p1Turn = true;
-    this.p1Clicks = Array(9).fill(0);
-    this.p2Clicks = Array(9).fill(0);
-    this.board = Array(9).fill(0);
-    this.endRound = false;
+    this.reset();
   }
+}
+Game.prototype.reset = function(){
+  document.getElementById("p1score").innerHTML = this.p1Score;
+  document.getElementById("p2score").innerHTML = this.p2Score;
+  var allCells = document.getElementsByClassName("cells");
+  for(var i = 0; i < allCells.length; i++){
+    allCells[i].innerHTML = "";
+  }
+  //reset board elements
+  document.getElementById("playerTurn").innerHTML = 1;
+  //can modify to determine who plays first in the next round
+  this.p1Turn = true;
+  this.p1Clicks = Array(9).fill(0);
+  this.p2Clicks = Array(9).fill(0);
+  this.board = Array(9).fill(0);
+  this.endRound = false;
 }
 
 var game = new Game();
