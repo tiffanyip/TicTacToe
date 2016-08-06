@@ -24,11 +24,9 @@ $(document).ready(function(){
       game.determineWinner();
     }
   });
-
   $("#reset").on('click', function() {
     game.reset();
-  })
-
+  });
 });
 
 
@@ -43,13 +41,16 @@ function Game(){
 }
 Game.prototype.determineWinner = function(){
   //check row, col, diagonal
+  var announceWinner = "";
   if(this.p1Clicks[0] + this.p1Clicks[1] + this.p1Clicks[2] == 3 || this.p1Clicks[3] + this.p1Clicks[4] + this.p1Clicks[5] == 3|| this.p1Clicks[6] + this.p1Clicks[7] + this.p1Clicks[8] == 3 || this.p1Clicks[0] + this.p1Clicks[4] + this.p1Clicks[8] == 3 || this.p1Clicks[2] + this.p1Clicks[4] + this.p1Clicks[6] == 3 || this.p1Clicks[0] + this.p1Clicks[3] + this.p1Clicks[6] == 3 || this.p1Clicks[1] + this.p1Clicks[4] + this.p1Clicks[7] == 3|| this.p1Clicks[2] + this.p1Clicks[5] + this.p1Clicks[8] == 3){
     this.p1Score++;
     this.endRound = true;
+    announceWinner = "Player 1 wins!"
   }
   if(this.p2Clicks[0] + this.p2Clicks[1] + this.p2Clicks[2] == 3 || this.p2Clicks[3] + this.p2Clicks[4] + this.p2Clicks[5] == 3|| this.p2Clicks[6] + this.p2Clicks[7] + this.p2Clicks[8] == 3 || this.p2Clicks[0] + this.p2Clicks[4] + this.p2Clicks[8] == 3 || this.p2Clicks[2] + this.p2Clicks[4] + this.p2Clicks[6] == 3 || this.p2Clicks[0] + this.p2Clicks[3] + this.p2Clicks[6] == 3 || this.p2Clicks[1] + this.p2Clicks[4] + this.p2Clicks[7] == 3|| this.p2Clicks[2] + this.p2Clicks[5] + this.p2Clicks[8] == 3){
     this.p2Score++;
     this.endRound = true;
+    announceWinner = "Player 2 wins!"
   }
   //if no one wins, end the round
   if(this.board.reduce( (prev, curr) => prev + curr ) === 9){
@@ -57,7 +58,22 @@ Game.prototype.determineWinner = function(){
   }
   //update scoreboard
   if(this.endRound){
+    var announce = '<p id="winner">' + announceWinner + "</p>";
+    $(".container").prepend(announce);
     this.reset();
+    $("#winner").delay(3000).queue(function (next) {
+        $(this).remove();
+        next();
+      });
+    $("#board").hide().delay(3000).queue(function (next) {
+          $(this).show();
+          next();
+    });
+    $(".turn").hide().delay(3000).queue(function (next) {
+          $(this).show();
+          next();
+    });
+
   }
 }
 Game.prototype.reset = function(){
